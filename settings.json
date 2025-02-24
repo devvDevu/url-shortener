@@ -1,0 +1,111 @@
+{
+    "settings": {
+            "test": {
+                "cmd": {
+                    "app": {}
+                },
+                "internal": {
+                    "config": {},
+                    "common": {
+                        "types": {
+                            "error_with_codes": {},
+                            "url_types": [ 
+                                {
+                                    "file_name": "url_id",
+                                    "file_ext": ".go",
+                                    "file_type": "int"
+                                },
+                                {
+                                    "file_name": "url_original",
+                                    "file_ext": ".go",
+                                    "file_type": "string"
+                                },
+                                {
+                                    "file_name": "url_short",
+                                    "file_ext": ".go",
+                                    "file_type": "string"
+                                }
+                                
+                            ]
+                        }
+                    },
+                    "adapter": {
+                        "database": {
+                            "postgres": {}
+                        }
+                    },
+                    "repository": {
+                        "url_repository": {}
+                    },
+                    "service": {
+                        "url_service": {}
+                    },
+                    "usecase": {
+                        "url_usecase": {}
+                    },
+                    "handler": {
+                        "url_get_handler": {},
+                        "url_post_handler": {}
+                    },
+                    "value_object": {
+                        "url_value_object": [
+                            {
+                                "file_name": "url",
+                                "file_ext": ".go",
+                                "fields": [
+                                    {
+                                        "name": "Original",
+                                        "type": "url_types.UrlOriginal",
+                                        "tag": ""
+                                    },
+                                    {
+                                        "name": "Short",
+                                        "type": "url_types.UrlShort",
+                                        "tag": ""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "model": {
+                        "url_model": [
+                            {
+                                "file_name": "url",
+                                "file_ext": ".go",
+                                "fields": [
+                                    {
+                                        "name": "Id",
+                                        "type": "url_types.UrlId",
+                                        "tag": ""
+                                    },
+                                    {
+                                        "name": "Original",
+                                        "type": "url_types.UrlOriginal",
+                                        "tag": ""
+                                    },
+                                    {
+                                        "name": "Short",
+                                        "type": "url_types.UrlShort",
+                                        "tag": ""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "data_transfer_object":{
+                        "url_dto": {
+                            "response": {},
+                            "request": {}
+                        },
+                        "result": {}
+                    },
+                    "pkg": {
+                        "env":{}
+                    }
+                },
+                "migrations": {
+                    "postgres": {}
+                }
+            }
+        }
+}
