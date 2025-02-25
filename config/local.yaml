@@ -1,0 +1,18 @@
+env:
+  type: "dev" # local dev prod ENV: ENV_TYPE
+http:
+  addr: "0.0.0.0:8080" # ENV: HTTP_ADDR
+  use_https: false # ENV: HTTP_USE_HTTPS
+db:
+  postgres:
+    host: "127.0.0.1" # ENV: POSTGRES_HOST
+    port: "5432" # ENV: POSTGRES_PORT
+    username: "default" # ENV: POSTGRES_USERNAME
+    password: "default" # ENV: POSTGRES_PASSWORD
+    database: "default" # ENV: POSTGRES_DATABASE
+    schema: "default" # ENV: POSTGRES_SCHEMA
+    max_idle_connections: 10 # ENV: POSTGRES_MAX_IDLE_CONNECTIONS
+    max_open_connections: 40 # ENV: POSTGRES_MAX_OPEN_CONNECTIONS
+    connection_max_lifetime: "1h" # ENV: POSTGRES_CONNECTION_MAX_LIFETIME
+    up_migrations: true # ENV: POSTGRES_UP_MIGRATIONS
+    migration_dir: "migrations/postgres/" # ENV: POSTGRES_MIGRATION_DIR

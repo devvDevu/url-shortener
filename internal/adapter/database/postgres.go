@@ -175,3 +175,24 @@ func (p *PostgresAdapter) NamedExecFetchRow(ctx context.Context, dest interface{
 
 	return err
 }
+
+func (p *PostgresAdapter) NamedExec(ctx context.Context, query db_types.DbQuery, arg interface{}) error {
+	const action = "PostgresAdapter NamedExec "
+	const method = "NamedExec"
+
+	_, err := p.conn.NamedExecContext(ctx, query.String(), arg)
+
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil
+	}
+
+	if err != nil && ctx.Err() == nil {
+		logrus.WithFields(logrus.Fields{
+			"adapterName": adapterName,
+			"method":      method,
+			"query":       query.String(),
+		}).WithError(err).Error(action)
+	}
+
+	return err
+}

@@ -20,23 +20,22 @@ type UrlRepository struct {
 type adapterI interface {
 	Get(ctx context.Context, dest interface{}, query db_types.DbQuery, params ...interface{}) (ok bool, err error)
 	Select(ctx context.Context, dest interface{}, query db_types.DbQuery) (ok bool, err error)
-	NamedExecFetchRow(ctx context.Context, dest interface{}, query db_types.DbQuery, arg interface{}) error
+	NamedExec(ctx context.Context, query db_types.DbQuery, arg interface{}) error
 }
 
 func NewUrlRepository(adapter adapterI) *UrlRepository {
 	repo := new(UrlRepository)
 	repo.adapter = adapter
 
-	repo.queries.createUrl = db_types.DbQuery("INSERT INTO url (original_url, short_url) VALUES (:original_url, :short_url)")
+	repo.queries.createUrl = db_types.DbQuery("INSERT INTO url (original_url, code) VALUES (:original_url, :code)")
 	repo.queries.getListUrl = db_types.DbQuery("SELECT * FROM url")
 	repo.queries.getUrlByCode = db_types.DbQuery("SELECT * FROM url WHERE code = :code")
 	return repo
 }
 
 func (r *UrlRepository) CreateUrl(ctx context.Context, url *url_model.Url) error {
-	dest := new(url_model.Url)
 
-	err := r.adapter.NamedExecFetchRow(ctx, dest, r.queries.createUrl, url)
+	err := r.adapter.NamedExec(ctx, r.queries.createUrl, url)
 	if err != nil {
 		err = error_with_codes.ErrorFailedToCreateUrl
 	}

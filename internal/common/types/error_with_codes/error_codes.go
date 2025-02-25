@@ -47,3 +47,17 @@ var (
 	ErrorFailedToGetUrlList   = NewError("failed to get url list", CodeFailedToGetUrlList)
 	ErrorFailedToGetUrlByCode = NewError("failed to get url by code", CodeFailedToGetUrlByCode)
 )
+
+// handler
+const (
+	_ ErrorCode = iota + 299
+	CodeMethodNotAllowed
+	CodeFailedToUnmarshal
+	CodeFailedToValidate
+)
+
+var (
+	ErrorMethodNotAllowed  = NewError("method not allowed", CodeMethodNotAllowed)
+	ErrorFailedToUnmarshal = NewError("failed to unmarshal", CodeFailedToUnmarshal)
+	ErrorFailedToValidate  = NewError("failed to validate", CodeFailedToValidate)
+)

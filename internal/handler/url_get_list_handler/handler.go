@@ -31,7 +31,7 @@ func (h *UrlGetListHandler) GetMethod() handler_type.HandlerMethod {
 	return http.MethodGet
 }
 
-func (h *UrlGetListHandler) GetPath() string {
+func (h *UrlGetListHandler) GetPath() handler_type.HandlerPath {
 	return "/url/list"
 }
 

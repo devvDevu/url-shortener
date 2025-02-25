@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"time"
+	"url-shortener/internal/common/types/error_with_codes"
 	"url-shortener/internal/common/types/handler_type"
 	"url-shortener/internal/common/types/url_types"
 	"url-shortener/internal/data_transfer_object/result"
@@ -34,7 +35,7 @@ func (h *UrlPostHandler) GetMethod() handler_type.HandlerMethod {
 	return http.MethodPost
 }
 
-func (h *UrlPostHandler) GetPath() string {
+func (h *UrlPostHandler) GetPath() handler_type.HandlerPath {
 	return "/url"
 }
 
@@ -57,18 +58,23 @@ func (h *UrlPostHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte,
 	}
 
 	var dtoRequest url_post_dto_request.UrlPostDto
+	logrus.Info(dtoRequest)
 	err = json.UnmarshalContext(ctx, body, &dtoRequest)
 	if err != nil {
+		err := error_with_codes.ErrorFailedToCast
 		logrus.WithFields(logrus.Fields{
 			"handlerName": handlerName,
 			"method":      method,
 		}).WithError(err).Error(action)
 		return nil, err
 	}
+	logrus.Info(dtoRequest)
+	logrus.Info(err)
 
 	validate := validator.New()
 	err = validate.Struct(dtoRequest)
 	if err != nil {
+		err := error_with_codes.ErrorFailedToValidate
 		logrus.WithFields(logrus.Fields{
 			"handlerName": handlerName,
 			"method":      method,

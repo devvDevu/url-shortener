@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16.1-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=default
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD=default
+
+  http_server:
+    build:
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD=default
+      - POSTGRES_DB=default
+      - CONFIG_PATH=config/local.yaml

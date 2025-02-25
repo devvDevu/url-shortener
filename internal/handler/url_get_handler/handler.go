@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"time"
+	"url-shortener/internal/common/types/error_with_codes"
 	"url-shortener/internal/common/types/handler_type"
 	"url-shortener/internal/common/types/url_types"
 	"url-shortener/internal/data_transfer_object/result"
@@ -34,7 +35,7 @@ func (h *UrlGetHandler) GetMethod() handler_type.HandlerMethod {
 	return http.MethodGet
 }
 
-func (h *UrlGetHandler) GetPath() string {
+func (h *UrlGetHandler) GetPath() handler_type.HandlerPath {
 	return "/url"
 }
 
@@ -59,6 +60,7 @@ func (h *UrlGetHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, 
 	var dtoRequest url_get_dto_request.UrlGetDto
 	err = json.UnmarshalContext(ctx, body, &dtoRequest)
 	if err != nil {
+		err := error_with_codes.ErrorFailedToCast
 		logrus.WithFields(logrus.Fields{
 			"handlerName": handlerName,
 			"method":      method,
@@ -69,6 +71,7 @@ func (h *UrlGetHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, 
 	validate := validator.New()
 	err = validate.Struct(dtoRequest)
 	if err != nil {
+		err := error_with_codes.ErrorFailedToValidate
 		logrus.WithFields(logrus.Fields{
 			"handlerName": handlerName,
 			"method":      method,

@@ -1,10 +1,10 @@
 -- +goose Up
-CREATE TABLE url (
+CREATE TABLE IF NOT EXISTS url (
     id SERIAL PRIMARY KEY,
-    original_url TEXT NOT NULL,
-    code TEXT NOT NULL,
+    original_url VARCHAR(255) NOT NULL,
+    code VARCHAR(8) NOT NULL
 );
 
 
 -- +goose Down
-DROP TABLE url;
+DROP TABLE IF EXISTS url;

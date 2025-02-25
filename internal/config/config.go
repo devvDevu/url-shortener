@@ -11,15 +11,27 @@ import (
 )
 
 type Config struct {
-	Http      http.HttpConfig
-	Database  database.DatabaseConfig
-	Env       EnvConfig
+	Http      http.HttpConfig         `yaml:"http"`
+	Database  database.DatabaseConfig `yaml:"db"`
+	Env       EnvConfig               `yaml:"env"`
 	path      string
 	envReader envReader
 }
 
 type envReader interface {
 	EnvReadConfig(addr string, cfg interface{}) error
+}
+
+func (c *Config) GetDatabase() *database.DatabaseConfig {
+	return &c.Database
+}
+
+func (c *Config) GetHttp() *http.HttpConfig {
+	return &c.Http
+}
+
+func (c *Config) GetEnv() *EnvConfig {
+	return &c.Env
 }
 
 func MustLoad(ctx context.Context, configPath string, envReader envReader) *Config {
