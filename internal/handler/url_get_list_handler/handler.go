@@ -52,6 +52,7 @@ func (h *UrlGetListHandler) ExecFunc(ctx context.Context, r *http.Request) ([]by
 		}).WithError(err).Error(action)
 		return nil, err
 	}
+	logrus.Info(urlList)
 
 	dtoResponse := url_get_list_dto.NewUrlGetListDto(urlList)
 

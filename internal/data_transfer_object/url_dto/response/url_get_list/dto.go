@@ -11,7 +11,7 @@ type UrlGetListDto struct {
 
 type Url struct {
 	Id       url_types.UrlId       `json:"id"`
-	Original url_types.UrlOriginal `json:"original"`
+	Original url_types.UrlOriginal `json:"original_url"`
 	Code     url_types.UrlCode     `json:"code"`
 }
 

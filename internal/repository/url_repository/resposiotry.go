@@ -29,7 +29,7 @@ func NewUrlRepository(adapter adapterI) *UrlRepository {
 
 	repo.queries.createUrl = db_types.DbQuery("INSERT INTO url (original_url, code) VALUES (:original_url, :code)")
 	repo.queries.getListUrl = db_types.DbQuery("SELECT * FROM url")
-	repo.queries.getUrlByCode = db_types.DbQuery("SELECT * FROM url WHERE code = :code")
+	repo.queries.getUrlByCode = db_types.DbQuery("SELECT * FROM url WHERE code = $1")
 	return repo
 }
 
