@@ -99,9 +99,3 @@ type UrlCode string // формат: 8 символов
 type UrlOriginal string // валидный URL
 ```
 
-## Разработка
-### Генерация моков
-```bash
-mockgen -source=internal/usecase/url_usecase/usecase.go -destination=mocks/mock_service.go -package=mocks
-```
-
