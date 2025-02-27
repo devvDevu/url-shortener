@@ -83,13 +83,11 @@ func (a *App) MustInit(ctx context.Context, r *mux.Router) (*App, error) {
 
 	{
 		logrus.Info(action, "handlers starting")
-		logrus.Info(action, "----------------------------------------------------")
 		err = a.handlers.MustInit(ctx, a.usecases, r)
 		if err != nil {
 			logrus.WithError(err).Error(action, "handlers failed")
 			return nil, err
 		}
-		logrus.Info(action, "----------------------------------------------------")
 		logrus.Info(action, "handlers running")
 	}
 

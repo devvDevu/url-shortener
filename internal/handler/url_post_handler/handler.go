@@ -9,8 +9,8 @@ import (
 	"url-shortener/internal/common/types/handler_type"
 	"url-shortener/internal/common/types/url_types"
 	"url-shortener/internal/data_transfer_object/result"
-	url_post_dto_request "url-shortener/internal/data_transfer_object/url_dto/request/url_post"
-	url_post_dto_response "url-shortener/internal/data_transfer_object/url_dto/response/url_post"
+	"url-shortener/internal/data_transfer_object/url_dto/request/request_url_post"
+	"url-shortener/internal/data_transfer_object/url_dto/response/response_url_post"
 
 	"github.com/go-playground/validator"
 	"github.com/goccy/go-json"
@@ -39,6 +39,16 @@ func (h *UrlPostHandler) GetPath() handler_type.HandlerPath {
 	return "/url"
 }
 
+// @Title Create short URL
+// @Description Convert long URL to short code
+// @Tags URL
+// @Accept  json
+// @Produce  json
+// @Param   body body request_url_post.UrlPostDto true "URL Data"
+// @Success 200 {object} response_url_post.UrlPostDto
+// @Failure 400 {object} result.ResultErr
+// @Failure 500 {object} result.ResultErr
+// @Router /url [post]
 func (h *UrlPostHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, error) {
 	const action = "UrlPostHandler ExecFunc "
 	const method = "ExecFunc"
@@ -57,7 +67,7 @@ func (h *UrlPostHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte,
 		return nil, err
 	}
 
-	var dtoRequest url_post_dto_request.UrlPostDto
+	var dtoRequest request_url_post.UrlPostDto
 	logrus.Info(dtoRequest)
 	err = json.UnmarshalContext(ctx, body, &dtoRequest)
 	if err != nil {
@@ -68,8 +78,6 @@ func (h *UrlPostHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte,
 		}).WithError(err).Error(action)
 		return nil, err
 	}
-	logrus.Info(dtoRequest)
-	logrus.Info(err)
 
 	validate := validator.New()
 	err = validate.Struct(dtoRequest)
@@ -91,7 +99,7 @@ func (h *UrlPostHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte,
 		return nil, err
 	}
 
-	dtoResponse := url_post_dto_response.UrlPostDto{
+	dtoResponse := response_url_post.UrlPostDto{
 		Ok: ok,
 	}
 

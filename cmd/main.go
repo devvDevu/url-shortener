@@ -12,12 +12,27 @@ import (
 	"url-shortener/internal/config"
 	"url-shortener/internal/pkg/env"
 
+	_ "url-shortener/docs"
+
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 )
 
 const defaultConfigPath = "config/local.yaml"
 
+// @title URL Shortener API
+// @version 1.0
+// @description API для сокращения URL-адресов
+
+// @contact.name API Support
+// @contact.url http://example.com/support
+// @contact.email support@example.com
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

@@ -12,7 +12,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const usecaseName = "UrlUsecase"
+const (
+	usecaseName = "UrlUsecase"
+	codeLength  = 8
+)
 
 type UrlUsecase struct {
 	service serviceI
@@ -32,7 +35,7 @@ func (u *UrlUsecase) MakeShortUrl(ctx context.Context, originalUrl url_types.Url
 	const action = "UrlUsecase MakeShortUrl "
 	const method = "MakeShortUrl"
 
-	code := url_types.UrlCode(generateSecureCode(8))
+	code := url_types.UrlCode(generateSecureCode(codeLength))
 	urlModel := &url_model.Url{
 		Original: originalUrl,
 		Code:     code,

@@ -7,7 +7,7 @@ import (
 	"url-shortener/internal/common/types/handler_type"
 	"url-shortener/internal/common/types/url_types"
 	"url-shortener/internal/data_transfer_object/result"
-	url_get_list_dto "url-shortener/internal/data_transfer_object/url_dto/response/url_get_list"
+	"url-shortener/internal/data_transfer_object/url_dto/response/response_url_get_list"
 	"url-shortener/internal/value_object/url_value_object"
 
 	"github.com/sirupsen/logrus"
@@ -35,6 +35,15 @@ func (h *UrlGetListHandler) GetPath() handler_type.HandlerPath {
 	return "/url/list"
 }
 
+// @Title Get original URL list
+// @Description Get original URL list
+// @Tags URL
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} response_url_get_list.UrlGetListDto
+// @Failure 404 {object} result.ResultErr
+// @Failure 400 {object} result.ResultErr
+// @Router /url/list [get]
 func (h *UrlGetListHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, error) {
 	const action = "UrlGetListHandler ExecFunc "
 	const method = "ExecFunc"
@@ -52,9 +61,8 @@ func (h *UrlGetListHandler) ExecFunc(ctx context.Context, r *http.Request) ([]by
 		}).WithError(err).Error(action)
 		return nil, err
 	}
-	logrus.Info(urlList)
 
-	dtoResponse := url_get_list_dto.NewUrlGetListDto(urlList)
+	dtoResponse := response_url_get_list.NewUrlGetListDto(urlList)
 
 	json, err := result.NewResultOk(dtoResponse, time.Since(t)).GetJson()
 	if err != nil {

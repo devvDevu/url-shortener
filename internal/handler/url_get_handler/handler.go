@@ -9,8 +9,8 @@ import (
 	"url-shortener/internal/common/types/handler_type"
 	"url-shortener/internal/common/types/url_types"
 	"url-shortener/internal/data_transfer_object/result"
-	url_get_dto_request "url-shortener/internal/data_transfer_object/url_dto/request/url_get"
-	url_get_dto_response "url-shortener/internal/data_transfer_object/url_dto/response/url_get"
+	"url-shortener/internal/data_transfer_object/url_dto/request/request_url_get"
+	"url-shortener/internal/data_transfer_object/url_dto/response/response_url_get"
 
 	"github.com/go-playground/validator"
 	"github.com/goccy/go-json"
@@ -39,6 +39,16 @@ func (h *UrlGetHandler) GetPath() handler_type.HandlerPath {
 	return "/url"
 }
 
+// @Title Get original URL
+// @Description Get original URL by short code
+// @Tags URL
+// @Accept  json
+// @Produce  json
+// @Param   code body request_url_get.UrlGetDto true "Code"
+// @Success 200 {object} response_url_get.UrlGetDto
+// @Failure 404 {object} result.ResultErr
+// @Failure 400 {object} result.ResultErr
+// @Router /url [get]
 func (h *UrlGetHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, error) {
 	const action = "UrlGetHandler ExecFunc "
 	const method = "ExecFunc"
@@ -57,7 +67,7 @@ func (h *UrlGetHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, 
 		return nil, err
 	}
 
-	var dtoRequest url_get_dto_request.UrlGetDto
+	var dtoRequest request_url_get.UrlGetDto
 	err = json.UnmarshalContext(ctx, body, &dtoRequest)
 	if err != nil {
 		err := error_with_codes.ErrorFailedToCast
@@ -87,7 +97,7 @@ func (h *UrlGetHandler) ExecFunc(ctx context.Context, r *http.Request) ([]byte, 
 		return nil, err
 	}
 
-	dtoResponse := url_get_dto_response.UrlGetDto{
+	dtoResponse := response_url_get.UrlGetDto{
 		OriginalUrl: *originalUrl,
 	}
 

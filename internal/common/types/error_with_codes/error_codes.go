@@ -61,3 +61,13 @@ var (
 	ErrorFailedToUnmarshal = NewError("failed to unmarshal", CodeFailedToUnmarshal)
 	ErrorFailedToValidate  = NewError("failed to validate", CodeFailedToValidate)
 )
+
+// unit-test
+const (
+	_ ErrorCode = iota + 399
+	CodeInvalidUrlCode
+)
+
+var (
+	ErrorInvalidUrlCode = NewError("invalid url code", CodeInvalidUrlCode)
+)

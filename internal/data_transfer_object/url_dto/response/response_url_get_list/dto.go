@@ -1,4 +1,4 @@
-package url_get_list_dto
+package response_url_get_list
 
 import (
 	"url-shortener/internal/common/types/url_types"

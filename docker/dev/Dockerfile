@@ -1,22 +1,23 @@
 FROM golang:1.23.6 AS builder
 
-WORKDIR /app
+WORKDIR /url-shortener
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /app/cmd/main ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /url-shortener/cmd/main ./cmd/main.go
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /app
-COPY --from=builder /app/cmd/main /app/cmd/main
-COPY --from=builder /app/config ./config
-COPY --from=builder /app/migrations ./migrations
+WORKDIR /url-shortener
+COPY --from=builder /url-shortener/cmd/main /url-shortener/cmd/main
+COPY --from=builder /url-shortener/config ./config
+COPY --from=builder /url-shortener/migrations ./migrations
+COPY --from=builder /url-shortener/docs ./docs
 
 ENV GOENV=dev
 EXPOSE 8080
 
-CMD ["/app/cmd/main"]
+CMD ["/url-shortener/cmd/main"]

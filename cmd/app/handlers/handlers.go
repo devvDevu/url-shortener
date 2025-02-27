@@ -15,6 +15,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 const defaultExecTimeout = 3 * time.Second
@@ -36,6 +37,10 @@ func (h *Handlers) MustInit(ctx context.Context, usecases *usecases.Usecases, ro
 			resultErrJson, _ := result.NewResultErr(error_with_codes.ErrorMethodNotAllowed).GetJson()
 			http.Error(w, string(resultErrJson), http.StatusMethodNotAllowed)
 		})
+	}
+
+	{
+		router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 	}
 
 	{

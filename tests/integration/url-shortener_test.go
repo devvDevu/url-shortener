@@ -70,7 +70,7 @@ func TestMakeShortUrl(t *testing.T) {
 	})
 }
 
-func TestGetUrlList(t *testing.T) {
+func TestGetUrl(t *testing.T) {
 	t.Run("success_get_url_list", func(t *testing.T) {
 		req, err := http.NewRequest("GET", fmt.Sprintf("%s/url/list", uri), nil)
 		assert.NoError(t, err)

@@ -1,0 +1,144 @@
+basePath: /
+definitions:
+  url-shortener_internal_data_transfer_object_result.ResultErr:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_request_request_url_get.UrlGetDto:
+    properties:
+      code:
+        maxLength: 8
+        minLength: 1
+        type: string
+    required:
+    - code
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto:
+    properties:
+      original_url:
+        type: string
+    required:
+    - original_url
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_response_response_url_get.UrlGetDto:
+    properties:
+      original_url:
+        type: string
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.Url:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      original_url:
+        type: string
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.UrlGetListDto:
+    properties:
+      urls:
+        items:
+          $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.Url'
+        type: array
+    type: object
+  url-shortener_internal_data_transfer_object_url_dto_response_response_url_post.UrlPostDto:
+    properties:
+      ok:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://example.com/support
+  description: API для сокращения URL-адресов
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: URL Shortener API
+  version: "1.0"
+paths:
+  /url:
+    get:
+      consumes:
+      - application/json
+      description: Get original URL by short code
+      parameters:
+      - description: Code
+        in: body
+        name: code
+        required: true
+        schema:
+          $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_request_request_url_get.UrlGetDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get.UrlGetDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+      tags:
+      - URL
+    post:
+      consumes:
+      - application/json
+      description: Convert long URL to short code
+      parameters:
+      - description: URL Data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_post.UrlPostDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+      tags:
+      - URL
+  /url/list:
+    get:
+      consumes:
+      - application/json
+      description: Get original URL list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.UrlGetListDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr'
+      tags:
+      - URL
+swagger: "2.0"

@@ -1,0 +1,221 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API для сокращения URL-адресов",
+        "title": "URL Shortener API",
+        "contact": {
+            "name": "API Support",
+            "url": "http://example.com/support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/url": {
+            "get": {
+                "description": "Get original URL by short code",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "parameters": [
+                    {
+                        "description": "Code",
+                        "name": "code",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_request_request_url_get.UrlGetDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get.UrlGetDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Convert long URL to short code",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "parameters": [
+                    {
+                        "description": "URL Data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_post.UrlPostDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    }
+                }
+            }
+        },
+        "/url/list": {
+            "get": {
+                "description": "Get original URL list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.UrlGetListDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/url-shortener_internal_data_transfer_object_result.ResultErr"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "url-shortener_internal_data_transfer_object_result.ResultErr": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_request_request_url_get.UrlGetDto": {
+            "type": "object",
+            "required": [
+                "code"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "maxLength": 8,
+                    "minLength": 1
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto": {
+            "type": "object",
+            "required": [
+                "original_url"
+            ],
+            "properties": {
+                "original_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_response_response_url_get.UrlGetDto": {
+            "type": "object",
+            "properties": {
+                "original_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.Url": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "original_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.UrlGetListDto": {
+            "type": "object",
+            "properties": {
+                "urls": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/url-shortener_internal_data_transfer_object_url_dto_response_response_url_get_list.Url"
+                    }
+                }
+            }
+        },
+        "url-shortener_internal_data_transfer_object_url_dto_response_response_url_post.UrlPostDto": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

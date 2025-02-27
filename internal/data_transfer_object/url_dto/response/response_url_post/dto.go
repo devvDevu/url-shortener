@@ -1,4 +1,4 @@
-package url_post_dto
+package response_url_post
 
 type UrlPostDto struct {
 	Ok bool `json:"ok"`
