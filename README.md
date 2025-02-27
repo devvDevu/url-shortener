@@ -1,7 +1,7 @@
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Go version](https://img.shields.io/badge/Golang-1.23.6-blue)
 
-```markdown
+
 # URL Shortener Service
 
 🚀 Сервис для сокращения URL-адресов с возможностью отслеживания и управления сокращенными ссылками
