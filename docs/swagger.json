@@ -166,12 +166,14 @@
             }
         },
         "url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto": {
+            "description": "DTO для создания короткой ссылки",
             "type": "object",
             "required": [
                 "original_url"
             ],
             "properties": {
                 "original_url": {
+                    "description": "Оригинальный URL для сокращения\nRequired: true\nExample: https://example.com/path?param=value\nFormat: url",
                     "type": "string"
                 }
             }

@@ -17,8 +17,14 @@ definitions:
     - code
     type: object
   url-shortener_internal_data_transfer_object_url_dto_request_request_url_post.UrlPostDto:
+    description: DTO для создания короткой ссылки
     properties:
       original_url:
+        description: |-
+          Оригинальный URL для сокращения
+          Required: true
+          Example: https://example.com/path?param=value
+          Format: url
         type: string
     required:
     - original_url
